@@ -1,6 +1,6 @@
-<?php require_once("../includes/functions.php"); 
-<?php include("../includes/layouts/header.php"); 
-?>
+<?php require_once("../includes/functions.php"); ?>
+<?php include("../includes/layouts/header.php"); ?>
+
 <html lang="en">
 	<head>
 	<title>Admin Pagetitle</title>
