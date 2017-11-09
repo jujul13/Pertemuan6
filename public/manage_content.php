@@ -25,6 +25,7 @@
 
 <div id="main">
 	<div id="navigation">
+
 		<ul class="subjects">
 
 	<?php $subject_set = find_all_subjecst(); ?>
@@ -66,7 +67,7 @@
 		
 		echo ">";
 		?>
-		
+
 		<a href="manage_content.php?page="><li><?php echo $page["menu_name"]; ?></li>
 			
 		 <?php
@@ -86,6 +87,11 @@
 	<?php mysqli_free_result($subject_set); ?>
 	</ul>
 	</div>
+	<div id="main">
+		<div id="navigation">
+			<?php echo navigation($selected_subject_id, $selected_page_id); ?>
+	</div>
+	
 	<div id="page">
 		<h2>Manage Content</h2>
 	<?php echo $selected_subject_id; ?> <br />
