@@ -13,37 +13,23 @@
 <div id="main">
 	<div id="navigation">
 		<ul class="subjects">
+
+	<?php $subject_set = find_all_subjecst(); ?>
+	
 	<?php
-	//2. Perform database query
-	$query = "SELECT * ";
-	$query .= "FROM subjects ";
-	$query .= "WHERE visible = 1";
-	$query .= "ORDER BY position ASC";
-	$subject_set = mysqli_query($connection, $query);
-	//Test if there was a query error
-	confirm_query($subject_set);
-?>
+	while ($subject = mysqli_fetch_assoc($subject_set)) {
+	?>
 		
 		<?php
 		 //3. Use returnetd data (if any)
-		 while($subject = mysqli_fetch_assoc($result)) {
+		 while($subject = mysqli_fetch_assoc($subject_set)) {
 			 //output data from each row
 		?>
 			<li>
-				<?php echo $subject["menu_name"] . " (" .
-			$subject["id"]. ")"; ?>
-			<?php
-	//2. Perform database query
-	$query = "SELECT * ";
-	$query .= "FROM pages ";
-	$query .= "WHERE visible = 1";
-	$query .= "AND subject_id = {$subject["id"] ";
-	$query .= "ORDER BY position ASC";
-	$page_set = mysqli_query($connection, $query);
-	//Test if there was a query error
-	confirm_query($page_set);
-?>
-			<ul class="pages">
+	<?php echo $subject["menu_name"];?>
+	<?php $page_set = find_pages_for_subject($subject["id"]); ?>
+		
+		<ul class="pages">
 		<?php
 		 
 		 while($page = mysqli_fetch_assoc($page_set)) {
