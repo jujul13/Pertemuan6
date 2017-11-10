@@ -86,8 +86,10 @@
 	<div id="page">
 		<?php
 		  echo message();
-		}
+		
 		?>
+
+		<?php echo $errors = errors(); ?>
 		<h2>Create subject </h2>
 
 	<form action="create_subject.php" method ="POST" >
