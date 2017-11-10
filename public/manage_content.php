@@ -90,7 +90,8 @@
 		<?php if ($current_subject) { ?>
 		<h2>Manage Subject</h2>
 		
-				Menu name : <?php echo $current_subject["menu_name"]; ?> <br />
+			Menu name : <?php echo $current_subject["menu_name"]; ?> <br />
+			<a href="edit_subject.php?subject=<?php echo $current_subject["id"]; ?>">Edit Subject</a>
 
 		<?php } elseif ($selected_page_id) {
 			?>
