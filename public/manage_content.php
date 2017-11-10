@@ -79,9 +79,11 @@
 	</div>
 	<div id="main">
 		<div id="navigation">
-			<?php echo navigation($selected_subject_id, $selected_page_id); ?>
+			<?php echo navigation($current_subject, $current_page); ?>
 	</div>
 	
+	<br />
+	<a href="new_subject.php">+ Add a subject</a>
 	<div id="page">
 		<?php if ($current_subject) { ?>
 		<h2>Manage Subject</h2>
