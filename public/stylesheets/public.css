@@ -79,10 +79,12 @@ ul.subjects {
 ul.pages{
 	padding-left: 2em;
 	list-style: square;
+	font-weight: normal;
 }
 .selected {
 	font-weight: bold;
 }
+
 
 /* Page Content */
 #page {
@@ -99,4 +101,7 @@ ul.pages{
 #page h3{
 	color: #8D0D19;
 }
-	
+
+.view-content {
+	margin: 1em; padding: 1em; border: 1px solid #999;
+}	
