@@ -13,4 +13,14 @@
 			return $Output;
 	}
 }
+function errors() {
+		if(isset($_SESSION["errors"])){
+			$output = "<div class = \"messages\">";
+			$errors = $_SESSION["message"]);
+			
+
+			$_SESSION["errors"] = null;
+			return $Output;
+	}
+}
 ?>

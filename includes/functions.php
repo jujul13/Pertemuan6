@@ -10,6 +10,20 @@
 		return $escaped_string;
 	}
 
+	function form_errors($errors= array()){
+		$output = "";
+		if (!empty($errors)){
+			$output .= "<div class=\"error\">";
+			$output .= "Please fix the following error";
+			$output .= "<ul>";
+			foreach ($errors as $key => $error){
+				$output .="<li>{$error}</li>";
+			}
+			$output .= "</ul>";
+			$output .= "</div>";
+		}
+			return $output;
+	}
 	function confirm_query($result_set) {
 		
 	function find_all_subjecst(){
