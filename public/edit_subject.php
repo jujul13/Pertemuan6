@@ -2,8 +2,46 @@
 <?php require_once("../includes/db_connection.php"); ?>
 <?php require_once("../includes/functions.php"); ?>
 <?php include("../includes/layouts/header.php"); ?>
+<?php require_once("../includes/validation_functions.php"); ?>
 <?php find_selected_page(); ?>
+	<?php
+if (isset($_POST['submit'])){
+
+
 	
+	$required_fields = array("menu_name", "position", "visible");
+	validate_presences($required_fields);
+
+	$field_with_max_lengths =  array("menu name" =>30);
+	validate_max_lengths($field_with_max_lengths);
+
+	if (empty($errors)){
+		
+
+	$id = $current_subject["id"];
+	$menu_name = mysql_prep($_POST["menu_name"]);
+	$position = (int) $_POST["position"];
+	$visible = (int) $_POST["visible"];
+
+
+	$query = "UPDATE subjects SET ";
+	$query .= " menu_name = '{$menu_name}', ";
+	$query .= " position = '{$position}', ";
+	$query .= " visible = '{$visible}', ";
+	$query .= "WHERE id = {$id} ";
+	$query .= "LIMIT 1";
+	$result = mysqli_query($connection, $query);
+
+
+if($result && mysqli_affected_rows($connection == 1){
+	$_SESSION["message"] = "Subject Created.";
+	redirect_to("manage_content.php");
+} 
+	else {
+	$message = "Subject creation failed.";
+	}
+}
+?>
 <?php
 	if(!$current_subject) {
 		redirect_to("manage_content.php");
@@ -89,16 +127,20 @@
 	
 	<div id="page">
 		<?php
-		  echo message();
+		if (!empty($message)){
+
+		  echo "<div class=\"message\">" . $message . "</div>";
+
+		}
 		
 		?>
 
-		<?php echo $errors = errors(); ?>
+		<?php echo form_errors($errors); ?>
 		
 		<h2>Edit subject: <?php echo $current_subject["menu_name"];?> </h2>
 
-	<form action="create_subject.php" method ="POST" >
-		<p>Menu name:
+	<form action="edit_subject.php?subject=<?php echo $current_subject["id"]; ?>" method ="POST" >
+		Menu name:
 			<input type="text" name="menu_name" value="" />
 		</p>
 		<p>Position:
