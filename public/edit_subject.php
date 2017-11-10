@@ -3,8 +3,10 @@
 <?php require_once("../includes/functions.php"); ?>
 <?php include("../includes/layouts/header.php"); ?>
 <?php require_once("../includes/validation_functions.php"); ?>
+
 <?php find_selected_page(); ?>
-	<?php
+
+<?php
 if (isset($_POST['submit'])){
 
 
@@ -33,11 +35,14 @@ if (isset($_POST['submit'])){
 	$result = mysqli_query($connection, $query);
 
 
-if($result && mysqli_affected_rows($connection == 1){
+if($result && mysqli_affected_rows($connection) >=0){
+	//Success
 	$_SESSION["message"] = "Subject Created.";
 	redirect_to("manage_content.php");
 } 
+
 	else {
+	//Failure
 	$message = "Subject creation failed.";
 	}
 }
@@ -129,7 +134,7 @@ if($result && mysqli_affected_rows($connection == 1){
 		<?php
 		if (!empty($message)){
 
-		  echo "<div class=\"message\">" . $message . "</div>";
+		  echo "<div class=\"message\">" . htmlentities($message) . "</div>";
 
 		}
 		
@@ -137,11 +142,12 @@ if($result && mysqli_affected_rows($connection == 1){
 
 		<?php echo form_errors($errors); ?>
 		
-		<h2>Edit subject: <?php echo $current_subject["menu_name"];?> </h2>
+		<h2>Edit subject: <?php echo htmlentities($current_subject["menu_name"]);?> </h2>
 
-	<form action="edit_subject.php?subject=<?php echo $current_subject["id"]; ?>" method ="POST" >
-		Menu name:
-			<input type="text" name="menu_name" value="" />
+	<form action="edit_subject.php?subject=<?php echo urlencode$(current_subject["id"]); ?>" method="POST">
+
+		<p>Menu name:
+			<input type="text" name="menu_name" value="<?php echo htmlentities($current_subject["menu_name"]);?>"/>
 		</p>
 		<p>Position:
 			<select name="position">
@@ -155,6 +161,7 @@ if($result && mysqli_affected_rows($connection == 1){
 					}
 					echo ">{$count}</option>";
 				}
+				
 				?>
 
 			</select>
@@ -174,7 +181,10 @@ if($result && mysqli_affected_rows($connection == 1){
 	</form>
 	<br />
 	<a href="manage_content.php">Cancel</a>
-
+	&nbsp;
+	&nbsp;
+	<a href="delete_subject.php?subject=<?php echo urelncode($current_subject["id"]); ?>" onclick="return confirm('are you sure?')">Delete subject</a>
+ 		&nbsp;
 	</div>
 </div>
 
