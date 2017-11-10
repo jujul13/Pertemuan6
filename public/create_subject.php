@@ -1,5 +1,6 @@
-<?php include("../includes/db_connection.php"); ?>
-<?php include("../includes/functions.php"); ?>
+<?php session_start(); ?>
+<?php require_once("../includes/db_connection.php"); ?>
+<?php require_once("../includes/functions.php"); ?>
 
 <?php
 if (isset($_POST['submit'])){
@@ -18,11 +19,11 @@ if (isset($_POST['submit'])){
 
 
 if(result){
-	$message = "Subject Created.";
+	$_SESSION["message"] = "Subject Created.";
 	redirect_to("manage_content.php");
 } 
 	else {
-	$message = "Subject creation failed";
+	$_SESSION["message"] = "Subject creation failed";
 	//this is probably a GET request
 	redirect_to("new_subject.php");
 }

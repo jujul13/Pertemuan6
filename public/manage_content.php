@@ -1,3 +1,4 @@
+<?php require_once("../includes/session.php"); ?>
 <?php include("../includes/db_connection.php"); ?>
 <?php include("../includes/functions.php"); ?>
 <?php include("../includes/layouts/header.php"); ?>
@@ -85,6 +86,7 @@
 	<br />
 	<a href="new_subject.php">+ Add a subject</a>
 	<div id="page">
+		<?php echo message(); ?>
 		<?php if ($current_subject) { ?>
 		<h2>Manage Subject</h2>
 		

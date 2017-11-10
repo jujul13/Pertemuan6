@@ -1,5 +1,6 @@
-<?php include("../includes/db_connection.php"); ?>
-<?php include("../includes/functions.php"); ?>
+<?php require_once("../includes/session.php"); ?>
+<?php require_once("../includes/db_connection.php"); ?>
+<?php require_once("../includes/functions.php"); ?>
 <?php include("../includes/layouts/header.php"); ?>
 <?php find_selected_page(); ?>
 	
@@ -83,6 +84,10 @@
 	</div>
 	
 	<div id="page">
+		<?php
+		  echo message();
+		}
+		?>
 		<h2>Create subject </h2>
 
 	<form action="create_subject.php" method ="POST" >
