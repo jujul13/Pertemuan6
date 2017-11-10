@@ -56,7 +56,7 @@
 	}
 }
 
-function navigation($subject_array, $page_array) {
+function public_navigation($subject_array, $page_array) {
 
 }
 
@@ -74,7 +74,7 @@ function navigation($subject_array, $page_array) {
 				$output .= " class=\"selected\"";
 			}
 			$output .=">";
-			$output .= "<a href="manage_content.php?subject=";
+			$output .= "<a href="index.php?subject=";
 		    $output .= urlencode($subject["id"]); 
 		    $output .= "\">";
 		    $output .=  htmlentities($subject["menu_name"]);
@@ -88,14 +88,50 @@ function navigation($subject_array, $page_array) {
 			$output .= " class=\"selected\""; 
 		}
 		$output .= ">";
-		$output .= "<a href=\"manage_content.php?page="; 
+		$output .= "<a href=\"index.php?page="; 
 		$output .= urlencode($page["id"]); 
 		$output .= "\">";
 		$output .= htmlentities($page["menu_name"]);
 		$output .= "</a></li>";	
 	}
 
-	    mysqli_free_result($page_set); 
+	if($subject_array["id"] == $subject["id"] ||
+	   $page_array["subject_id"] == $subject["id"]){
+		$page_set = find_pages_for_subject($subject["id"]); 
+		$output .= "<ul class=\"page\">"?>
+	
+	<?php
+	while ($page = mysqli_fetch_assoc($pagesubject_set)) {
+		$output .= "<li";
+			if ($page_array && $page["id"] == $page_array["id"]) {
+				$output .= " class=\"selected\"";
+			}
+			$output .=">";
+			$output .= "<a href="index.php?page=";
+		    $output .= urlencode($page["id"]); 
+		    $output .= "\">";
+		    $output .=  htmlentities($page["menu_name"]);
+		    $output .= "</a>";
+		   	$page_set = find_pages_for_subject($page["id"]); 
+			$output .= "<ul class=\"pages\">";
+		 	while($page = mysqli_fetch_assoc($page_set)) {
+
+				$output .= "<li";
+		if ($page_array && $page["id"] == $page_array["id"]){
+			$output .= " class=\"selected\""; 
+		}
+		$output .= ">";
+		$output .= "<a href=\"index.php?page="; 
+		$output .= urlencode($page["id"]); 
+		$output .= "\">";
+		$output .= htmlentities($page["menu_name"]);
+		$output .= "</a></li>";	
+	}
+	$output .= "</ul>";
+	mysqli_free_result($page_set); 
+	}
+
+	    
 		$output .= "</ul></li>"
 	   
 	}
