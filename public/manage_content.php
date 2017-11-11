@@ -26,13 +26,10 @@
 	<div id="page">
 
 		<?php echo message(); ?>
-		<?php if ($current_subject) { ?>
-		<h2>Manage Subject</h2>
-		
-			Menu name : <?php echo htmlentities($current_subject["menu_name"]); ?> <br />
+		<?php if ($current_page) { ?>
 
 			Position: <?php echo $current_subject["position"]; ?><br/>
-			Visible: <?php echo $current_subject["visible"] == 1 ? 'yes': 'no';   ?><br/>
+			Visible: <?php echo $current_page["visible"] == 1 ? 'yes': 'no';   ?><br/>
 
 			<br/>
 
