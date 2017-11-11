@@ -1,6 +1,7 @@
 <?php require_once("../includes/session.php"); ?>
 <?php require_once("../includes/db_connection.php"); ?>
 <?php require_once("../includes/functions.php"); ?>
+<?php $layout_context = "admin"; ?>
 <?php include("../includes/layouts/header.php"); ?>
 <?php require_once("../includes/validation_functions.php"); ?>
 
@@ -66,7 +67,7 @@ if($result && mysqli_affected_rows($connection) >=0){
 	</div>
 		<ul class="subjects">
 
-	<?php $subject_set = find_all_subjecst(); ?>
+	<?php $subject_set = find_all_subjecst(false); ?>
 	
 	<?php
 	while ($subject = mysqli_fetch_assoc($subject_set)) {
@@ -152,7 +153,7 @@ if($result && mysqli_affected_rows($connection) >=0){
 		<p>Position:
 			<select name="position">
 				<?php
-				$subject_set = find_all_subjecst();
+				$subject_set = find_all_subjecst(false);
 				$subject_count = mysqli_num_rows($subject_set);
 				for($count=1; $count <= $subject_count; $count++){
 					echo "<option value=\"{$count}\"";

@@ -47,6 +47,7 @@ if($result && mysqli_affected_rows($connection) >=0){
 }
 
 ?>
+<?php $layout_context = "admin"; ?>
 <?php include("../includes/layouts/header.php"); ?>
 <html lang="en">
 	<head>
