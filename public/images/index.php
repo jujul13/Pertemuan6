@@ -1,6 +1,8 @@
 <?php require_once("../includes/session.php"); ?>
 <?php include("../includes/db_connection.php"); ?>
 <?php include("../includes/functions.php"); ?>
+
+<?php $layout_context = "public"; ?>
 <?php include("../includes/layouts/header.php"); ?>
 <?php find_selected_page(); ?>
 	
