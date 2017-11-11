@@ -27,6 +27,9 @@
 		</div>
 		<?php } elseif ($current_page) { ?>
 
+		<?php echo htmlentities($current_page["menu_name"]); ?>
+		<?php echo nl2br(htmlentities($current_page["content"])); ?>
+		
 		<h2>Manage Page</h2>
 		
 		Menu name : <?php echo htmlentities(string)($current_page["menu_name"]); ?> <br />
@@ -40,7 +43,9 @@
 		
 
 	<?php } else { ?>
-		Please select a subject or a page.
+		
+	<p>Welcome!</p>
+
 	<?php } ?>
 
 	</div>
