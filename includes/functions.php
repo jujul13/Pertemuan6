@@ -28,12 +28,41 @@
 	}
 	function confirm_query($result_set) {
 		
-	function find_all_subjecst(){
+	function find_all_subjects($public = true){
 	
+		global $connection;
 
-	function find_pages_for_subject(){
+		$query = "SELECT * ";
+		$query .= "FROM subjects ";
+		if ($public) {
+			$query .= "WHERE visible = 1";
+		}
+		
+		$query .= "ORDER BY position ASC";
+		$subject_set = mysqli_query($connection, $query);
+		confirm_query($subject_set);
+		return $subject_set;
 
+	}
+	function find_pages_for_subject($subject_id, $public=true){
 
+		global $connection;
+
+		$safe_subject_id = mysqli_real_escape_string($connection, $subject_id);
+
+		$query = "SELECT * ";
+		$query .= "FROM pages ";
+		$query .= "WHERE subject_id = {$safe_subject_id} ";
+		if ($public) {
+			$query .= "AND visible = 1";
+		}
+		
+		$query .= "ORDER BY position ASC";
+		$page_set = mysqli_query($connection, $query);
+		confirm_query($page_set);
+		return $page_set;
+
+	}
 		
 	function find_page_by_id($page_id) {
 		
@@ -55,6 +84,29 @@
 		$current_page = null;
 	}
 }
+function navigation($subject_array, $page_array){
+	$output = "<ul class=\"subjects\">";
+	$subject_set = find_all_subjects(false);
+	while($subject = mysqli_fetch_assoc($subject_set)){
+		$output .= "<li";
+		if ($subject_array && $subject["id"] == $subject_array["id"]){
+			$output .= "class=\"selected\"";
+		}
+		$output .= ">";
+		$output .= "<a href=\"manage_content.php?subject=";
+		$output .= urlencode($subject["id"]);
+		$output .= "\">";
+		$output .= htmlentities($subject["menu_name"]);
+		$output .= "</a>";
+
+		$page_set = find_pages_for_subject($subject["id"]), false);
+		$output .= "<ul class=\"pages\">";
+		while($page =mysqli_fetch_assoc($page_set)){
+			$output .= "<li";
+		}
+	}
+
+}
 
 function public_navigation($subject_array, $page_array) {
 
@@ -65,7 +117,7 @@ function public_navigation($subject_array, $page_array) {
 	// - the currently selected subject ID(if any)
 	// - the currently selected page ID(if any)
 	$output = "<ul class=\"subjects\">";
-	<?php $subject_set = find_all_subjecst(); ?>
+	<?php $subject_set = find_all_subjects(; ?>
 	
 	<?php
 	while ($subject = mysqli_fetch_assoc($subject_set)) {
