@@ -4,7 +4,7 @@
 
 <?php $layout_context = "public"; ?>
 <?php include("../includes/layouts/header.php"); ?>
-<?php find_selected_page(); ?>
+<?php find_selected_page(true); ?>
 	
 
 	<div id="main">
