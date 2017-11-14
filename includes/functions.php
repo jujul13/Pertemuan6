@@ -63,6 +63,35 @@
 		return $page_set;
 
 	}
+
+	function find_all_admins(){
+		global $connection;
+
+		$query = "SELECT * ";
+		$query .= "FROM admins";
+		$query .= "ORDER BY username ASC";
+		$admin_set = mysqli_query($connection, $query);
+		confirm_query ($admin_set);
+		return $admin_set;
+
+
+	}
+
+	function find_admin_by_id($admin_id){
+		global $connection;
+
+		$query = "SELECT * ";
+		$query .= "FROM admins";
+		$query .= "WHERE id = {$safe_admin_id}";
+		$query .= "LIMIT 1";
+		$admin_set = mysqli_query($connection, $query);
+		confirm_query($admin_set);
+		if($admin = mysqli_fetch_assoc($admin_set)){
+			return $admin;
+		} else{
+			return null;
+		}
+	}
 		
 	function find_page_by_id($page_id, $public=true) {
 		global $connection;
