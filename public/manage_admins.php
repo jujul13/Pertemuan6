@@ -1,9 +1,14 @@
-<?php
-$koneksi = mysqli_connect("localhost","root","","web_video");
-$query = "SELECT * FROM users WHERE username";
-$hasil = mysqli_query($koneksi,$query);
+<?php require_once("../includes/session.php"); ?>
+<?php require_once("../includes/db_connection.php"); ?>
+<?php require_once("../includes/functions.php"); ?>
 
+<?php 
+	$admin_set = find_all_admins();
 ?>
+
+<?php $layout_context = "admin"; ?>
+<?php include("../includes/layouts/header.php"); ?>
+
 <html lang="en">
 	<head>
 	<title>Admin Pagetitle</title>
@@ -20,28 +25,37 @@ $hasil = mysqli_query($koneksi,$query);
 	&nbsp;
 	</div>
 <div id="page">
+	<?php echo message(); ?>
 	<h2>Manage Admins</h2><br>
 	<tr>
-	<th><b>Username</th></b>
-	<th><b>Actions</th></b>
+	<th> style="text-align: left; width; 200px;">Username</th>
+	<th colspan="2" style="text-align: left;">Actions</th></b>
 	</tr>
 	<?php
-	while($row = mysqli_fetch_assoc($hasil)){
+	while($admin = mysqli_fetch_assoc($admin_set)){
 		?>
 		<tr>
-		<td><?php echo $row('username'); ?></td>
-		<td>
-			<a href="edit_admin.php">Edit</a> |
-			<a href="Delete_admin.php">Delete</a>
+		<td><?php echo htmlentities($admin["username"]); ?>
+		<br />
+		<?php echo htmlentities($admin["hashed_password"]); ?>
 		</td>
+		<td>
+			<a href="edit_admin.php?id=<?php echo urlencode($admin["id"]); ?>">Edit</a> |
+			<a href="Delete_admin.php?id=<?php echo urlencode($admin["id"]); ?>" on click="return confirm('Are you sure');">Delete</a></td>
+		
 		</tr>
 	<?php
 	}
 	?>
+	</table>
+	<br />
+	<a href="new_admin.php">Add new admin</a>
+	
 
-	</div>
-	</div>
-<div id = "footer">Copyright 2017, Widget Corp</div>
+</div>
+</div>
+
+<?php include("../includes/footer.php"); ?>
 
 </body>
 </html>
