@@ -1,37 +1,64 @@
-<?php
- session_start();
- if(isset($_SESSION['login']) && $_SESSION['login'] == 1){
-	 header('Location: adminMenu.php');
- }
-?>
+<?php require_once("../includes/session.php"); ?>
+<?php require_once("../includes/db_connection.php"); ?>
+<?php require_once("../includes/functions.php"); ?>
+<?php require_once("../includes/validation_functions.php"); ?>
 
+<?php 
+$username = "";
+if (isset($POST['submit'])){
 
-<html lang="en">
-	<head>
-	<title>Login Page</title>
-	<link href="stylesheets/public.css" media="all" rel="stylesheet" type="text/css" />
-	</head>
-<body>
-<div id="header">
-	<h1>Widget Corp Login</h1>
-	</div>
+	$required_fields = array("username", "password");
+	validate_presences($required_fields);
+
 	
+
+	if(empty($errors)){
+
+		$username = $_POST["username"];
+		$password = $_POST["password"];
+
+		$found_admin = attempt_login($username, $password);
+
+		if($found_admin) {
+			$_SESSION["message"] = "Admin created.";
+			$_SESSION["admin_id"] = $found_admin["id"];
+			$_SESSION["username"] = $found_admin["username"];
+			redirect_to("admin.php");
+		} else{
+			$_SESSION["message"] = "Username/password not found.";
+		}
+
+		}
+	} else {
+
+	}
+?>
+<?php $layout_context = "admin"; ?>
+<?php include("../includes/layouts/header.php")" ?>
+
 <div id="main">
 	<div id="navigation">
-	<ul><li><a href="form_regis.php">Register</a></li></ul>
+	&nbsp;
 	</div>
-	<div id="page">
-<form action="proses_login.php" method="POST" /></br>
-<h2>Login Menu</h2>
-<p>Welcome Friends. </p> 
-Username:
-<input type="text" name="username" /></br></br>
-Password:
-<input type="password" name="password" /></br></br>
-<input type="submit" value="Login" />
-</div>
+	
+<div id="page">
+	<?php echo message(); ?>
+	<?php echo form_errors($errors); ?>
+
+	<h2>Login</h2>
+	<form action="login.php" method="post">
+		<ul>
+			<p>Username:
+				<input type="text" name="username" value="<?php echo htmlentities($username); ?>" />
+			</p>
+			<p>Password;
+				<input type="Password" name="password" value="" />
+			</p>
+			<input type="submit" name="submit" value="Submit" />
+			</form>
+			
+		
 	</div>
-<div id = "footer">Copyright 2017, Widget Corp</div>
-</form>
-</body>
-</html>
+	</div>
+
+<?php include("../includes/layouts/footer.php"); ?>
